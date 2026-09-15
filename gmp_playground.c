@@ -1,59 +1,55 @@
 #include <stdio.h>
-#include <gmp.h>
+
+typedef struct{
+  int a, b, c;
+  int *pa, *pb, *pc;
+} Intp;
+
+void mul(int a[6], int b){
+  for (int i = 0; i<6; i++){
+    a[i]*=b;
+  }
+}
+
+void printArr(int arr[6]) {
+    for (int i = 0; i < 6; i++)
+        printf("%d: %d, ",i, arr[i]);
+    printf("\n");
+}
+
+void fibp(int fib[6], int* pfib[6]) {
+    for (int i = 0; i < 6; i++)
+        pfib[i]=&fib[i];
+    printf("\n");
+}
 
 int main() {
-  /* allocate space, initialize its value to 0. */
-  mpz_t a, b;
-  mpz_init(a);
-  mpz_init(b);
+  int* pfib[6];
+  int fib[6] = {0,1,2,3,4,5};
+  fibp(fib, pfib);
+  printf("%d", *pfib[1]);
 
-  /* set values */
-  mpz_set(a, b);
-  mpz_set_si(a, -100);
-  mpz_set_ui(a, 100);
-  mpz_set_d(a, 123.0);
 
-  /* allocate space and set value in one shot. */
-  mpz_init_set_str(a, "12345678987654321", 10); /* base 10 */
-  mpz_init_set(a, b);
-  mpz_init_set_si(a, -100);
-  mpz_init_set_ui(a, 100);
-  mpz_init_set_d(a, 123.0);
 
-  /* conversion, if OP is too big, the result maybe meaningless. */
-  mpz_set(a, -100);
-  long si = mpz_get_si(a); /* si = -100 */
-  mpz_set(a, 100);
-  unsigned long ui = mpz_get_ui(a); /* ui = 100 */
-  mpz_set_d(a, 123.0);
-  double d = mpz_get_d(a); /* d = 123.0 */
-  char result[100];
-  mpz_get_str(result, 10, a);
 
-  /* arithmetic */
-  mpz_t c;
-  mpz_add(c, a, b); /* c = a + b */
-  mpz_add_ui(c, a, 10);
-  mpz_sub(c, a, b); /* c = a - b */
-  mpz_sub_ui(c, a, 10);
-  mpz_ui_sub(c, 10, a);
-  mpz_mul(c, a, b); /* c = a * b */
-  mpz_mul_si(c, a, -100);
-  mpz_mul_ui(c, a, 100);
-  mpz_addmul(c, a, b); /* c = c + a * b */
-  mpz_addmul_ui(c, a, 100);
-  mpz_submul(c, a, b); /* c = c - a * b */
-  mpz_submul(c, a, 100);
-  mpz_neg(c, a); /* c = -a */
-  mpz_abs(c, a); /* c = |a| */
+  // int fib[6] = {0,1,2,3,4,5};
+  // mul(fib, 5);
+  // printArr(fib);
+  //printf("0:%d, 1:%d, 2:%d, 3:%d, 4:%d, 5:%d \n", Fib[0], Fib[1], Fib[2], Fib[3], Fib[4], Fib[5]);
 
-  /* formatted input & output */
-  gmp_scanf("%Zd", c);
-  gmp_printf("%Zd\n", c);
-
-  /* clear memory */
-  mpz_clear(a);
-  mpz_clear(b);
-  mpz_clear(c);
-  return 0;
+  // int a, b, c;
+  // int *pa, *pb, *pc;
+  // a = 1;
+  // b = 2;
+  // c = 3;
+  // pa = &a;
+  // pb = &b;
+  // pc = &c;
+  // printf("a:%d, b:%d, c:%d \n", *pa, *pb, *pc);
+  // int* pd;
+  // pd = pa;
+  // pa = pb;
+  // pb = pc;
+  // pc = pd;
+  // printf("a:%d, b:%d, c:%d \n", *pa, *pb, *pc);
 }
