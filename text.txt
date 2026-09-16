@@ -2,3 +2,9 @@ For fibunacci number with index n it will take about 0.69424215*(n-1) bits of da
 Sheafification of G - rekord: 216_203_171
 goal = 10 -> 0.3s
 goal = 11 -> 1.6s
+
+0 -> 03, 04, 05
+1 -> 07, 08, 09
+2 -> 15, 16, 17
+3 -> 31, 32, 33
+4 -> 63, 64, 65

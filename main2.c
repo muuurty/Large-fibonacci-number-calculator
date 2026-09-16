@@ -19,22 +19,23 @@ void fib_clear(mpz_t fib[6]){
 }
 
 void step(mpz_t* pfib[6], mpz_t* n, mpz_t* m){  // mpz_add_ui, mpz_mul
-    // gmp_printf("pfib = [%Zd, %Zd, %Zd]\n", *pfib[0], *pfib[1], *pfib[2]);
+    mpz_t* p;
     mpz_mul(*n, *pfib[0], *pfib[0]);
-    // gmp_printf("pfib[0]=%Zd\n", *pfib[0]);
     mpz_mul(*m, *pfib[1], *pfib[1]);
-    // gmp_printf("pfib[0]=%Zd\n", *pfib[0]);
-    gmp_printf("pfib = [%Zd, %Zd, %Zd], n:%Zd, m:%Zd\n", *pfib[0], *pfib[1], *pfib[2], *n, *m);
     mpz_add(*pfib[3], *n, *m);
-    // gmp_printf("pfib[0]=%Zd\n", *pfib[0]);
     mpz_add(*n, *pfib[0], *pfib[2]);
-    // gmp_printf("%Zd, %Zd = %Zd, %Zd \n", *pfib[1], *n, *pfib[0], *pfib[2]);
     mpz_mul(*pfib[4], *pfib[1], *n);
     mpz_mul(*n, *pfib[2], *pfib[2]);
     mpz_add(*pfib[5], *n, *m);
+    p = pfib[0];
     pfib[0] = pfib[3];
+    pfib[3] = p;
+    p = pfib[1];
     pfib[1] = pfib[4];
+    pfib[4] = p;
+    p = pfib[2];
     pfib[2] = pfib[5];
+    pfib[5] = p;
 }
 
 
@@ -42,7 +43,7 @@ int main(void){
     mpz_t* pfib[6];
     mpz_t fib[6];
 
-    uint64_t goal = 1;
+    uint64_t goal = 24;
     printf ("Enter your number: ");
     scanf("%lu", &goal); 
 
@@ -60,9 +61,8 @@ int main(void){
     for (int i = 0; i<goal; i++){
         step(pfib, &n, &m);
     }
-    // printf ("nth fibunacci = ");
-    gmp_printf("nth fibunacci = %Zd, %Zd, %Zd\n", *pfib[0], *pfib[1], *pfib[2]);
-    // printf ("\n");
+    // gmp_printf("nth fibunacci = %Zd, %Zd, %Zd\n", *pfib[0], *pfib[1], *pfib[2]);
+    // gmp_printf("%Zd\n", *pfib[1]);
     fib_clear(fib);
     mpz_clear(n);
     mpz_clear(m);
