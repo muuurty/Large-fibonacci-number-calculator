@@ -19,10 +19,16 @@ void fib_clear(mpz_t fib[6]){
 }
 
 void step(mpz_t* pfib[6], mpz_t* n, mpz_t* m){  // mpz_add_ui, mpz_mul
+    // gmp_printf("pfib = [%Zd, %Zd, %Zd]\n", *pfib[0], *pfib[1], *pfib[2]);
     mpz_mul(*n, *pfib[0], *pfib[0]);
+    // gmp_printf("pfib[0]=%Zd\n", *pfib[0]);
     mpz_mul(*m, *pfib[1], *pfib[1]);
+    // gmp_printf("pfib[0]=%Zd\n", *pfib[0]);
+    gmp_printf("pfib = [%Zd, %Zd, %Zd], n:%Zd, m:%Zd\n", *pfib[0], *pfib[1], *pfib[2], *n, *m);
     mpz_add(*pfib[3], *n, *m);
+    // gmp_printf("pfib[0]=%Zd\n", *pfib[0]);
     mpz_add(*n, *pfib[0], *pfib[2]);
+    // gmp_printf("%Zd, %Zd = %Zd, %Zd \n", *pfib[1], *n, *pfib[0], *pfib[2]);
     mpz_mul(*pfib[4], *pfib[1], *n);
     mpz_mul(*n, *pfib[2], *pfib[2]);
     mpz_add(*pfib[5], *n, *m);
