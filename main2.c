@@ -26,9 +26,15 @@ void step(mpz_t* pfib[6], mpz_t* n, mpz_t* m){  // mpz_add_ui, mpz_mul
     mpz_mul(*pfib[4], *pfib[1], *n);
     mpz_mul(*n, *pfib[2], *pfib[2]);
     mpz_add(*pfib[5], *n, *m);
+    mpz_t* p = pfib[0];
     pfib[0] = pfib[3];
+    pfib[3] = p;
+    p = pfib[1];
     pfib[1] = pfib[4];
+    pfib[4] = p;
+    p = pfib[2];
     pfib[2] = pfib[5];
+    pfib[5] = p;
 }
 
 
