@@ -4,53 +4,45 @@
 #include <assert.h>
 #include <gmp.h>
 
-// int = make_code(uint64_t* n){
-    
-// }
-
-void fib_init(mpz_t* pfib[6], mpz_t fib[6]){
-    for (int i = 0; i<6; i++){
+void fib_init(mpz_t* pfib[4], mpz_t fib[4]){
+    for (int i = 0; i<4; i++){
         mpz_init(fib[i]);
         pfib[i] = &fib[i];
     }
 }
 
-void fib_clear(mpz_t fib[6]){
-    for (int i = 0; i<6; i++){
+void fib_clear(mpz_t fib[4]){
+    for (int i = 0; i<4; i++){
         mpz_clear(fib[i]);
     }
 }
 
-void step(mpz_t* pfib[6], mpz_t* n, mpz_t* m){  // mpz_add_ui, mpz_mul
+void step(mpz_t* pfib[4], mpz_t* n){  // mpz_add_ui, mpz_mul
     mpz_t* p;
-    mpz_mul(*n, *pfib[0], *pfib[0]);
-    mpz_mul(*m, *pfib[1], *pfib[1]);
-    mpz_add(*pfib[3], *n, *m);
-    mpz_add(*n, *pfib[0], *pfib[2]);
-    mpz_mul(*pfib[4], *pfib[1], *n);
-    mpz_mul(*n, *pfib[2], *pfib[2]);
-    mpz_add(*pfib[5], *n, *m);
+    mpz_mul_2exp(*n, *pfib[1], 1);
+    mpz_sub(*n, *n, *pfib[0]);
+    mpz_mul(*pfib[2], *n, *pfib[0]);
+    mpz_mul(*pfib[1], *pfib[1], *pfib[1]);
+    mpz_mul(*pfib[0], *pfib[0], *pfib[0]);
+    mpz_add(*pfib[3], *pfib[0], *pfib[1]);
     p = pfib[0];
-    pfib[0] = pfib[3];
-    pfib[3] = p;
+    pfib[0] = pfib[2];
+    pfib[2] = p;
     p = pfib[1];
-    pfib[1] = pfib[4];
-    pfib[4] = p;
-    p = pfib[2];
-    pfib[2] = pfib[5];
-    pfib[5] = p;
+    pfib[1] = pfib[3];
+    pfib[3] = p;
 }
 
 
 int main(void){
-    mpz_t* pfib[6];
-    mpz_t fib[6];
+    mpz_t* pfib[4];
+    mpz_t fib[4];
 
     uint64_t goal;
     printf ("Enter your number: ");
     if (!scanf("%lu" , &goal)){
         printf("Input error!");
-        return 1
+        return 1;
     }
 
     fib_init(pfib, fib);
@@ -58,20 +50,17 @@ int main(void){
     mpz_set_ui(fib[1],3);
     mpz_set_ui(fib[2],5);
 
-    mpz_t n, m;
+    mpz_t n;
     mpz_init(n);
-    mpz_init(m);
     mpz_set_ui(n, 0);
-    mpz_set_ui(m, 0);
 
     for (int i = 0; i<goal; i++){
         // printf("step %d", i);
-        step(pfib, &n, &m);
+        step(pfib, &n);
     }
     // gmp_printf("nth fibunacci = %Zd, %Zd, %Zd\n", *pfib[0], *pfib[1], *pfib[2]);
     gmp_printf("%Zd\n", *pfib[1]);
     fib_clear(fib);
     mpz_clear(n);
-    mpz_clear(m);
-    return 0
+    return 0;
 }
