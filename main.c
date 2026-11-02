@@ -4,48 +4,59 @@
 #include <assert.h>
 #include <gmp.h>
 
-typedef struct{
-    mpz_t a, b, c;
-} Fib3;
+// int = make_code(uint64_t* n){
+    
+// }
 
-void Fib3_init(Fib3* a){
-    mpz_init(a->a);
-    mpz_init(a->b);
-    mpz_init(a->c);
+void fib_init(mpz_t* pfib[6], mpz_t fib[6]){
+    for (int i = 0; i<6; i++){
+        mpz_init(fib[i]);
+        pfib[i] = &fib[i];
+    }
 }
 
-void Fib3_clear(Fib3* a){
-    mpz_clear(a->a);
-    mpz_clear(a->b);
-    mpz_clear(a->c);
+void fib_clear(mpz_t fib[6]){
+    for (int i = 0; i<6; i++){
+        mpz_clear(fib[i]);
+    }
 }
 
-void step(Fib3 *a, Fib3 *b, mpz_t* n, mpz_t* m){  // mpz_add_ui, mpz_mul
-    mpz_mul(*n, b->a, b->a);
-    mpz_mul(*m, b->b, b->b);
-    mpz_add(a->a, *n, *m);
-    mpz_add(*n, b->a, b->c);
-    mpz_mul(a->b, b->b, *n);
-    mpz_mul(*n, b->c, b->c);
-    mpz_add(a->c, *n, *m);
+void step(mpz_t* pfib[6], mpz_t* n, mpz_t* m){  // mpz_add_ui, mpz_mul
+    mpz_t* p;
+    mpz_mul(*n, *pfib[0], *pfib[0]);
+    mpz_mul(*m, *pfib[1], *pfib[1]);
+    mpz_add(*pfib[3], *n, *m);
+    mpz_add(*n, *pfib[0], *pfib[2]);
+    mpz_mul(*pfib[4], *pfib[1], *n);
+    mpz_mul(*n, *pfib[2], *pfib[2]);
+    mpz_add(*pfib[5], *n, *m);
+    p = pfib[0];
+    pfib[0] = pfib[3];
+    pfib[3] = p;
+    p = pfib[1];
+    pfib[1] = pfib[4];
+    pfib[4] = p;
+    p = pfib[2];
+    pfib[2] = pfib[5];
+    pfib[5] = p;
 }
 
-void printFib3(Fib3 *a){
-    gmp_printf("%Zd, %Zd, %Zd \n", a->a, a->b, a->c);
-}
 
 int main(void){
-    uint64_t goal = 10;
-    // printf ("Enter your number: ");
-    // scanf("%lu", &goal); 
+    mpz_t* pfib[6];
+    mpz_t fib[6];
 
-    int flag;
-    Fib3 a, b;
-    Fib3_init(&a);
-    Fib3_init(&b);
-    mpz_set_ui(a.a,2);
-    mpz_set_ui(a.b,3);
-    mpz_set_ui(a.c,5);
+    uint64_t goal;
+    printf ("Enter your number: ");
+    if (!scanf("%lu" , &goal)){
+        printf("Input error!");
+        return 1
+    }
+
+    fib_init(pfib, fib);
+    mpz_set_ui(fib[0],2);
+    mpz_set_ui(fib[1],3);
+    mpz_set_ui(fib[2],5);
 
     mpz_t n, m;
     mpz_init(n);
@@ -54,13 +65,13 @@ int main(void){
     mpz_set_ui(m, 0);
 
     for (int i = 0; i<goal; i++){
-        step(&b, &a, &n, &m);
-        step(&a, &b, &n, &m);
+        // printf("step %d", i);
+        step(pfib, &n, &m);
     }
-    printf (" nth fibunacci = ");
-    gmp_printf("%Zd\n", a.a);
-    printf ("\n");
-
-    Fib3_clear(&a);
-    Fib3_clear(&b);
+    // gmp_printf("nth fibunacci = %Zd, %Zd, %Zd\n", *pfib[0], *pfib[1], *pfib[2]);
+    gmp_printf("%Zd\n", *pfib[1]);
+    fib_clear(fib);
+    mpz_clear(n);
+    mpz_clear(m);
+    return 0
 }

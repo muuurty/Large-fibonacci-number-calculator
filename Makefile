@@ -1,5 +1,5 @@
 CC = gcc
-SRCS = main2.c
+SRCS = main.c
 INCLUDES = -Iincludes
 LIBS = -lm -lgmp
 TARGET = fib
