@@ -18,13 +18,13 @@ def bin_to_dec(n):
     return d
 def make_code2(a):
     b=""
-    while a!=4:
-        if a%2==0 and a>6:
+    while a!=1:
+        if a%2==0:# and a>1:
             a/=2
-            b="2"+b
+            b="*"+b
         else:
             a-=1
-            b="1"+b
+            b="+"+b
     return b
 def make_code3(a):
     b=""
@@ -69,34 +69,6 @@ def graph(fun, ran):
     plt.plot(xpoints, ypoints)
     plt.show()
 
-# m = 0
-# a = 0
-# code = ""
-# for i in range(5, 70): #range(8388608, 16777216)
-#     if len(make_code(i)) > m:
-#         code = make_code(i)
-#         m = len(code)
-#         a = i
-# print(f"len: {m}, code: {code}, i: {a}")
+for i in range(1, 17):
+    print(f"index: {i}, code: {make_code2(i)}")
 
-# for i in range(5,20):
-#     code = make_code(i)
-#     print(f"len: {code}, code: {code}")
-
-# for i in range(5, 70):
-#     print(f"i: {str(i).zfill(2)}, bin: {dec_to_bin(i).zfill(7)}, dec code: {bin_to_dec(make_code(i))}, code: {make_code(i)}")
-def a(b):
-    return(make_code(b))
-# graph(a, range(5, 100_000))
-# print(list(map(a, range(5, 1000))))
-y3 = []
-y2 = []
-x = range(5, 100_000)
-for i in x:
-    y3.append(len(make_code3(i)))
-    y2.append(len(make_code2(i)))
-plt.plot(x, y2, alpha=1, label = "code2")
-plt.plot(x, y3, alpha=0.5, label = "code3")
-plt.legend()
-plt.show()
-# print(i, make_code3(i).zfill(9), make_code(i))

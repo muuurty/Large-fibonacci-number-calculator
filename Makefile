@@ -3,8 +3,8 @@ SRCS = main.c
 INCLUDES = -Iincludes
 LIBS = -lm -lgmp
 TARGET = fib
-CFLAGS = -O3 -fopenmp
- 
+CFLAGS = -O3
+
 $(TARGET): $(SRCS)
 	$(CC) $(SRCS) $(CFLAGS) $(INCLUDES) $(LIBS) -o $(TARGET)
  
