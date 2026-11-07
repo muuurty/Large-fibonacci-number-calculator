@@ -1,7 +1,5 @@
 CC = gcc
 SRCS = main.c
-INCLUDES = -Iincludes
-LIBS = -lm -lgmp
 TARGET = fib
 CFLAGS = -O3
 
