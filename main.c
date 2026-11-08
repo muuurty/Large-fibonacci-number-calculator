@@ -11,38 +11,18 @@ typedef struct {
   uint64_t code;
 } Code;
 
-void print_binary64(uint64_t num) {
-    // Prolazimo kroz sve bitove od 63 do 0
-    for (int i = 63; i >= 0; i--) {
-        // Izvučemo trenutni bit (0 ili 1)
-        int bit = (num >> i) & 1ULL;
-        
-        // Ispišemo ga kao običan cijeli broj
-        printf("%d", bit);
-
-        // Razmak svakih 8 bitova radi čitljivosti
-        if (i % 8 == 0 && i != 0) {
-            printf(" ");
-        }
-    }
-    printf("\n");
-}
-
 Code make_code(uint64_t goal){
     Code c;
     c.length = 0;
     c.code = 0;
     int code_len = 0;
     while(1 != goal){
-        // print_binary64(c.code);
         if (goal%2==0){
             goal/=2;
             c.code+=1;
         }else{
             goal-=1;
         }
-        // print_binary64(c.code);
-        // printf("%ld\n\n", goal);
         c.length++;
         c.code <<= 1;
     }
